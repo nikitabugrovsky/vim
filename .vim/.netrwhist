@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/Users/nbugrovsky/elk-rackspace/vcita-cookbooks/elk-vcita'
+let g:netrw_dirhist_2='/Users/nbugrovsky/elk-rackspace/cookbooks/elk-vcita'
+let g:netrw_dirhist_3='/Users/nbugrovsky/chef/vcita-cookbooks/elk-vcita'
+let g:netrw_dirhist_4='/Users/nbugrovsky/chef/cookbooks/cookbook-elasticsearch'
+let g:netrw_dirhist_5='/Users/nbugrovsky/chef/cookbooks'
+let g:netrw_dirhist_6='/Users/nbugrovsky/chef/cookbooks/base'
+let g:netrw_dirhist_7='/Users/nbugrovsky/chef/cookbooks/base/recipes'
+let g:netrw_dirhist_8='/Users/nbugrovsky/chef/cookbooks/vcita-lb/recipes'
+let g:netrw_dirhist_9='/Users/nbugrovsky/.chef'
