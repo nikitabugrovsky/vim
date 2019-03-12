@@ -5,7 +5,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'hashivim/vim-packer'
 Plug 'hashivim/vim-terraform'
-Plug 'hashivim/vim-vagrant'
 Plug 'townk/vim-autoclose'
 Plug 'airblade/vim-gitgutter'
 Plug 'kien/ctrlp.vim'
@@ -17,6 +16,7 @@ Plug 'bronson/vim-trailing-whitespace'
 
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'hashivim/vim-vagrant', { 'for': 'ruby' }
 
 " Initialize plugin system
 call plug#end()
