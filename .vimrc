@@ -1,4 +1,4 @@
-call plug#begin("/home/nbugrovs/.vim/plugged")
+call plug#begin('~/.vim/plugged')
 
 " Make sure you use single quotes
 " Regular Loading
