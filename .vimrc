@@ -1,4 +1,4 @@
-call plug#begin('~/.vim/plugged')
+call plug#begin("~/.vim/plugged")
 
 " Make sure you use single quotes
 " Regular Loading
@@ -32,6 +32,10 @@ nnoremap <Leader>j <C-W><C-J>
 nnoremap <Leader>k <C-W><C-K>
 nnoremap <Leader>l <C-W><C-L>
 nnoremap <Leader>h <C-W><C-H>
+
+" easy empty lines
+map <Enter> o<ESC>
+map <S-Enter> O<ESC>
 
 set nocompatible
 colorscheme monokai
@@ -96,6 +100,7 @@ set noerrorbells
 set number
 set ruler
 set cursorline
+set colorcolumn=80
 set autoindent
 set smartindent
 set whichwrap=<,>,h,l
