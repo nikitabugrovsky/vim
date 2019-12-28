@@ -83,7 +83,7 @@ set directory=~/.vim/vimswaps/
 "use :retab to reindent files
 "set list shows you tabs
 set list
-"PEP8 compliant indent
+"Python PEP8 compliant indent
 au BufNewFile, BufRead *.py
             \ set tabstop=4
             \ set softtabstop=4
@@ -92,7 +92,7 @@ au BufNewFile, BufRead *.py
             \ set expandtab
             \ set autoindent
             \ set fileformat=unix
-
+"Ruby indent
 au BufNewFile, BufRead *.rb
             \ set tabstop=2
             \ set softtabstop=2
@@ -100,15 +100,15 @@ au BufNewFile, BufRead *.rb
             \ set expandtab
             \ set autoindent
             \ set fileformat=unix
-
-au BufNewFile, BufRead *.yaml
+"YAML indent
+au BufNewFile, BufRead *.yaml,*.yml
             \ setlocal et
             \ set tabstop=2
             \ set softtabstop=2
             \ set shiftwidth=2
             \ set expandtab
             \ set autoindent
-
+"JSON indent
 au BufNewFile, BufRead *.json
             \ setlocal et
             \ set tabstop=4
@@ -116,7 +116,12 @@ au BufNewFile, BufRead *.json
             \ set shiftwidth=4
             \ set expandtab
             \ set autoindent
-au BufWritePre *.json %!python -m json.tool
+autocmd BufWrite *.json :call JsonPrettyPrint()
+func! JsonPrettyPrint()
+    execute "normal! mz"
+    %!python -m json.tool
+    execute "normal! 'z"
+endfunc
 
 set tabstop=4
 set softtabstop=4
@@ -143,6 +148,19 @@ set wildmenu
 "matching brackets
 set showmatch
 set matchtime=3
-"Remove all trailing whitespace by pressing <Fn-F2>
-nnoremap <F2> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
-nnoremap <F3> :retab
+"Remove trailing whitespace when saving file
+autocmd BufWrite * :call DeleteTrailingWhiteSpace()
+func! DeleteTrailingWhiteSpace()
+    execute "normal mz"
+    %s/\s\+$//ge
+    execute "normal 'z"
+endfunc
+"Templates
+autocmd BufNewFile *.sh 0r ~/.vim/templates/skeleton.sh
+autocmd BufNewFile *.py 0r ~/.vim/templates/skeleton.py
+autocmd BufNewFile *.rb 0r ~/.vim/templates/skeleton.rb
+autocmd BufNewFile *.sh,*.py,*.rb :call CreatedAtTimestamp()
+func! CreatedAtTimestamp()
+    %s/inserttimestamphere/\=strftime("%c")/
+    execute "normal GA"
+endfunc
