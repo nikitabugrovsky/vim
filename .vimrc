@@ -1,7 +1,7 @@
 call plug#begin("~/.vim/plugged")
 
-" Make sure you use single quotes
-" Regular Loading
+"Make sure you use single quotes
+"Regular Loading
 Plug 'tpope/vim-fugitive'
 Plug 'hashivim/vim-packer'
 Plug 'hashivim/vim-terraform'
@@ -13,33 +13,39 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'sickill/vim-monokai'
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'vimjas/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'valloric/youcompleteme'
 Plug 'scrooloose/syntastic'
 
-" On-demand loading
+"On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'hashivim/vim-vagrant', { 'for': 'ruby' }
+Plug 'vimjas/vim-python-pep8-indent', { 'for': 'python' }
+Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
+Plug 'stephpy/vim-yaml', { 'for': 'yaml' }
+Plug 'leshill/vim-json', { 'for': 'json' }
 
-" Initialize plugin system
+"Initialize plugin system
 call plug#end()
-" map NERD Tree
+"map NERD Tree
 map <C-n> :NERDTreeToggle<CR>
 map <C-p> :CtrlP<CR>
-" remap splits navigation
+"remap splits navigation
 let mapleader = "\<Space>"
 nnoremap <Leader>j <C-W><C-J>
 nnoremap <Leader>k <C-W><C-K>
 nnoremap <Leader>l <C-W><C-L>
 nnoremap <Leader>h <C-W><C-H>
 
-" easy empty lines
+"easy empty lines
 map <Enter> o<ESC>
 map <S-Enter> O<ESC>
 
 set nocompatible
 colorscheme monokai
 
+"shfmt
+let g:shfmt_extra_args = '-i 2'
+let g:shfmt_fmt_on_save = 1
 "youcompleteme
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -54,6 +60,9 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_sh_checkers = ['shfmt', 'shellcheck']
+let g:syntastic_yaml_checkers = ['yamllint']
 
 let g:xml_syntax_folding = 1
 let g:conoline_auto_enable = 1
@@ -74,7 +83,7 @@ set directory=~/.vim/vimswaps/
 "use :retab to reindent files
 "set list shows you tabs
 set list
-" PEP8 compliant indent
+"PEP8 compliant indent
 au BufNewFile, BufRead *.py
             \ set tabstop=4
             \ set softtabstop=4
@@ -84,8 +93,33 @@ au BufNewFile, BufRead *.py
             \ set autoindent
             \ set fileformat=unix
 
+au BufNewFile, BufRead *.rb
+            \ set tabstop=2
+            \ set softtabstop=2
+            \ set shiftwidth=2
+            \ set expandtab
+            \ set autoindent
+            \ set fileformat=unix
+
+au BufNewFile, BufRead *.yaml
+            \ setlocal et
+            \ set tabstop=2
+            \ set softtabstop=2
+            \ set shiftwidth=2
+            \ set expandtab
+            \ set autoindent
+
+au BufNewFile, BufRead *.json
+            \ setlocal et
+            \ set tabstop=4
+            \ set softtabstop=4
+            \ set shiftwidth=4
+            \ set expandtab
+            \ set autoindent
+au BufWritePre *.json %!python -m json.tool
+
 set tabstop=4
-set softtabstop=0
+set softtabstop=4
 set shiftwidth=4
 set expandtab
 
@@ -99,14 +133,14 @@ set noerrorbells
 "editor
 set number
 set ruler
-set cursorline
 set colorcolumn=80
-set autoindent
+set cursorline
+"set autoindent
 set smartindent
 set whichwrap=<,>,h,l
 set backspace=2
 set wildmenu
-" matching brackets
+"matching brackets
 set showmatch
 set matchtime=3
 "Remove all trailing whitespace by pressing <Fn-F2>
