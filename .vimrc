@@ -127,14 +127,21 @@ endfunc
 autocmd BufWrite *.json :call JsonPrettyPrint()
 func! JsonPrettyPrint()
     execute "normal! mz"
-    %!python3 -m json.tool
+    if executable('python3')
+        %!python3 -m json.tool
+    elseif executable('python2')
+        %!python2 -m json.tool
+    else
+        %!python -m json.tool
+    endif
     execute "normal! 'z"
 endfunc
-
+"Undefined filetypes indent
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
+set autoindent
 
 "end tabs
 set formatoptions=t
