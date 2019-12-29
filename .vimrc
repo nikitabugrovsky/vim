@@ -164,3 +164,13 @@ func! CreatedAtTimestamp()
     %s/inserttimestamphere/\=strftime("%c")/
     execute "normal GA"
 endfunc
+autocmd BufNewFile *.sh,*.py,*.rb :call MaintainerEmailAddress()
+func! MaintainerEmailAddress()
+    %s/insertemailhere/\=expand("$MAINTAINER_EMAIL")/
+    execute "normal GA"
+endfunc
+autocmd BufNewFile *.sh,*.py,*.rb :call MaintainerName()
+func! MaintainerName()
+    %s/insertmaintainerhere/\=expand("$MAINTAINER_NAME")/
+    execute "normal GA"
+endfunc
