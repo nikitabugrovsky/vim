@@ -183,3 +183,12 @@ endfunc
 func! MaintainerName()
     %s/insertmaintainerhere/\=expand("$MAINTAINER_NAME")/
 endfunc
+" Set scripts to be executable from the shell
+autocmd BufWritePost *.sh,*.py,*.rb :call MakeFileExecutable()
+func! MakeFileExecutable()
+    if getline(1) =~ "^#!" || getline(1) =~ "^# !"
+        if getline(1) =~ "/bin/"
+            silent execute "!chmod 0755 <afile>"
+        endif
+    endif
+endfunc
