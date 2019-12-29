@@ -1,4 +1,6 @@
-#!/usr/bin/env python
-# Maintainer: Nikita Bugrovsky
-# Email: xxxxxx.xxxxxxxxx@xxxxx.xxx
+#!/usr/bin/env insertinterpreterhere
+# Maintainer: insertmaintainerhere
+# Email: insertemailhere
 # Created At: inserttimestamphere
+
+

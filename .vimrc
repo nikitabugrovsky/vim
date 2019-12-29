@@ -167,6 +167,17 @@ endfunc
 autocmd BufNewFile *.sh 0r ~/.vim/templates/skeleton.sh
 autocmd BufNewFile *.py 0r ~/.vim/templates/skeleton.py
 autocmd BufNewFile *.rb 0r ~/.vim/templates/skeleton.rb
+"Proper shebang for python
+autocmd BufNewFile *.py :call SetPythonShebang()
+func! SetPythonShebang()
+    if executable('python3')
+        %s/insertinterpreterhere/python3/
+    elseif executable('python2')
+        %s/insertinterpreterhere/python2/
+    else
+        %s/insertinterpreterhere/python/
+    endif
+endfunc
 autocmd BufNewFile *.sh,*.py,*.rb :call PopulateTemplate()
 func! PopulateTemplate()
     call CreatedAtTimestamp()
@@ -183,7 +194,7 @@ endfunc
 func! MaintainerName()
     %s/insertmaintainerhere/\=expand("$MAINTAINER_NAME")/
 endfunc
-" Set scripts to be executable from the shell
+"Set scripts to be executable from the shell
 autocmd BufWritePost *.sh,*.py,*.rb :call MakeFileExecutable()
 func! MakeFileExecutable()
     if getline(1) =~ "^#!" || getline(1) =~ "^# !"
