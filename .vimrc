@@ -159,18 +159,19 @@ endfunc
 autocmd BufNewFile *.sh 0r ~/.vim/templates/skeleton.sh
 autocmd BufNewFile *.py 0r ~/.vim/templates/skeleton.py
 autocmd BufNewFile *.rb 0r ~/.vim/templates/skeleton.rb
-autocmd BufNewFile *.sh,*.py,*.rb :call CreatedAtTimestamp()
+autocmd BufNewFile *.sh,*.py,*.rb :call PopulateTemplate()
+func! PopulateTemplate()
+    call CreatedAtTimestamp()
+    call MaintainerEmailAddress()
+    call MaintainerName()
+    execute "normal GA"
+endfunc
 func! CreatedAtTimestamp()
     %s/inserttimestamphere/\=strftime("%c")/
-    execute "normal GA"
 endfunc
-autocmd BufNewFile *.sh,*.py,*.rb :call MaintainerEmailAddress()
 func! MaintainerEmailAddress()
     %s/insertemailhere/\=expand("$MAINTAINER_EMAIL")/
-    execute "normal GA"
 endfunc
-autocmd BufNewFile *.sh,*.py,*.rb :call MaintainerName()
 func! MaintainerName()
     %s/insertmaintainerhere/\=expand("$MAINTAINER_NAME")/
-    execute "normal GA"
 endfunc
