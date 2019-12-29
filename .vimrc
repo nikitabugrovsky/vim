@@ -84,42 +84,50 @@ set directory=~/.vim/vimswaps/
 "set list shows you tabs
 set list
 "Python PEP8 compliant indent
-au BufNewFile, BufRead *.py
-            \ set tabstop=4
-            \ set softtabstop=4
-            \ set shiftwidth=4
-            \ set textwidth=79
-            \ set expandtab
-            \ set autoindent
-            \ set fileformat=unix
+autocmd BufNewFile, BufRead *.py :call PythonDefaultIndent()
+func! PythonDefaultIndent()
+    set tabstop=4
+    set softtabstop=4
+    set shiftwidth=4
+    set textwidth=79
+    set expandtab
+    set autoindent
+    set fileformat=unix
+endfunc
 "Ruby indent
-au BufNewFile, BufRead *.rb
-            \ set tabstop=2
-            \ set softtabstop=2
-            \ set shiftwidth=2
-            \ set expandtab
-            \ set autoindent
-            \ set fileformat=unix
+autocmd BufNewFile, BufRead *.rb :call RubyDefaultIndent()
+func! RubyDefaultIndent()
+    set tabstop=2
+    set softtabstop=2
+    set shiftwidth=2
+    set expandtab
+    set autoindent
+    set fileformat=unix
+endfunc
 "YAML indent
-au BufNewFile, BufRead *.yaml,*.yml
-            \ setlocal et
-            \ set tabstop=2
-            \ set softtabstop=2
-            \ set shiftwidth=2
-            \ set expandtab
-            \ set autoindent
+autocmd BufNewFile, BufRead *.yaml,*.yml :call YamlDefaultIndent()
+func! YamlDefaultIndent()
+    setlocal et
+    set tabstop=2
+    set softtabstop=2
+    set shiftwidth=2
+    set expandtab
+    set autoindent
+endfunc
 "JSON indent
-au BufNewFile, BufRead *.json
-            \ setlocal et
-            \ set tabstop=4
-            \ set softtabstop=4
-            \ set shiftwidth=4
-            \ set expandtab
-            \ set autoindent
+autocmd BufNewFile, BufRead *.json :call JsonDefaultIndent()
+func! JsonDefaultIndent()
+    setlocal et
+    set tabstop=4
+    set softtabstop=4
+    set shiftwidth=4
+    set expandtab
+    set autoindent
+endfunc
 autocmd BufWrite *.json :call JsonPrettyPrint()
 func! JsonPrettyPrint()
     execute "normal! mz"
-    %!python -m json.tool
+    %!python3 -m json.tool
     execute "normal! 'z"
 endfunc
 
