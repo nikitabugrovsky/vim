@@ -124,15 +124,17 @@ func! JsonDefaultIndent()
     set expandtab
     set autoindent
 endfunc
-autocmd BufWrite *.json :call JsonPrettyPrint()
+autocmd FileType json nnoremap <buffer> <F2> :call JsonPrettyPrint()<CR>
 func! JsonPrettyPrint()
     execute "normal! mz"
     if executable('python3')
         %!python3 -m json.tool
     elseif executable('python2')
         %!python2 -m json.tool
-    else
+    elseif executable('python')
         %!python -m json.tool
+    else
+        %!jq .
     endif
     execute "normal! 'z"
 endfunc
