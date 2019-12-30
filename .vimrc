@@ -196,6 +196,10 @@ func! SetPythonShebang()
         %s/insertinterpreterhere/python/
     endif
 endfunc
+autocmd BufNewFile *.sh :call SetShellShebang()
+func! SetShellShebang()
+    %s/insertinterpreterhere/\=split(expand("$SHELL"), "\/")[-1]/
+endfunc
 autocmd BufNewFile *.sh,*.py,*.rb :call PopulateTemplate()
 func! PopulateTemplate()
     call CreatedAtTimestamp()
