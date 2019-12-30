@@ -114,6 +114,15 @@ func! YamlDefaultIndent()
     set expandtab
     set autoindent
 endfunc
+autocmd FileType yaml nnoremap <buffer> <F2> :call YamlPrettyPrint()<CR>
+func! YamlPrettyPrint()
+    execute "normal! mz"
+    if executable('yamlfmt')
+        execute "%!yamlfmt"
+        execute "normal! ggO---"
+    endif
+    execute "normal! 'z"
+endfunc
 "JSON indent
 autocmd BufNewFile, BufRead *.json :call JsonDefaultIndent()
 func! JsonDefaultIndent()
@@ -204,7 +213,7 @@ func! MaintainerName()
     %s/insertmaintainerhere/\=expand("$MAINTAINER_NAME")/
 endfunc
 "Set scripts to be executable from the shell
-autocmd BufWrite *.sh,*.py,*.rb :call MakeFileExecutable()
+autocmd BufWritePre *.sh,*.py,*.rb :call MakeFileExecutable()
 func! MakeFileExecutable()
     if getline(1) =~ "^#!" || getline(1) =~ "^# !"
         if getline(1) =~ "/bin/"
