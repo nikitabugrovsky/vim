@@ -119,7 +119,6 @@ func! YamlPrettyPrint()
     execute "normal! mz"
     if executable('yamlfmt')
         execute "%!yamlfmt"
-        execute "normal! ggO---"
     endif
     execute "normal! 'z"
 endfunc
