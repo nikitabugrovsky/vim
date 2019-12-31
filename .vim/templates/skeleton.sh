@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env insertinterpreterhere
 # Maintainer: insertmaintainerhere
 # Email: insertemailhere
 # Created At: inserttimestamphere
