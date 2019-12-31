@@ -80,7 +80,7 @@ set backupdir=~/.vim/vimbackup/
 set directory=~/.vim/vimswaps/
 
 "tabs
-"use :retab to reindent files
+"use :retab to re indent files
 "set list shows you tabs
 set list
 "Python PEP8 compliant indent
@@ -122,7 +122,7 @@ func! YamlPrettyPrint()
     endif
     execute "normal! 'z"
 endfunc
-"JSON indent
+"JASON indent
 autocmd BufNewFile, BufRead *.json :call JsonDefaultIndent()
 func! JsonDefaultIndent()
     setlocal et
@@ -134,7 +134,7 @@ func! JsonDefaultIndent()
 endfunc
 autocmd FileType json nnoremap <buffer> <F2> :call JsonPrettyPrint()<CR>
 func! JsonPrettyPrint()
-    execute "normal! mz"
+    execute "normal! Ms"
     if executable('python3')
         %!python3 -m json.tool
     elseif executable('python2')
@@ -146,7 +146,7 @@ func! JsonPrettyPrint()
     endif
     execute "normal! 'z"
 endfunc
-"Undefined filetypes indent
+"Undefined file types indent
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -165,7 +165,7 @@ set number
 set ruler
 set colorcolumn=80
 set cursorline
-"set autoindent
+"set auto indent
 set smartindent
 set whichwrap=<,>,h,l
 set backspace=2
@@ -173,7 +173,13 @@ set wildmenu
 "matching brackets
 set showmatch
 set matchtime=3
-"Remove trailing whitespace when saving file
+"Spellcheck
+nnoremap <F3> :call FixLastSpellingError()<CR>
+func! FixLastSpellingError()
+    normal! mm[s1z=`m
+endfunc
+setlocal spell spelllang=en_us
+"Remove trailing white space when saving file
 autocmd BufWrite * :call DeleteTrailingWhiteSpace()
 func! DeleteTrailingWhiteSpace()
     execute "normal mz"
