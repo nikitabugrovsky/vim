@@ -66,7 +66,6 @@ let g:syntastic_yaml_checkers = ['yamllint']
 
 let g:xml_syntax_folding = 1
 let g:conoline_auto_enable = 1
-"let g:airline_powerline_fonts = 1
 let g:airline_theme='base16_monokai'
 syntax on
 let python_highlight_all=1
