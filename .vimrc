@@ -3,8 +3,6 @@ call plug#begin("~/.vim/plugged")
 "Make sure you use single quotes
 "Regular Loading
 Plug 'tpope/vim-fugitive'
-Plug 'hashivim/vim-packer'
-Plug 'hashivim/vim-terraform'
 Plug 'townk/vim-autoclose'
 Plug 'airblade/vim-gitgutter'
 Plug 'kien/ctrlp.vim'
@@ -15,14 +13,11 @@ Plug 'sickill/vim-monokai'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'valloric/youcompleteme'
 Plug 'scrooloose/syntastic'
+Plug 'sheerun/vim-polyglot'
+Plug 'yggdroot/indentline'
 
 "On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'hashivim/vim-vagrant', { 'for': 'ruby' }
-Plug 'vimjas/vim-python-pep8-indent', { 'for': 'python' }
-Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
-Plug 'stephpy/vim-yaml', { 'for': 'yaml' }
-Plug 'leshill/vim-json', { 'for': 'json' }
 
 "Initialize plugin system
 call plug#end()
@@ -43,9 +38,16 @@ map <S-Enter> O<ESC>
 set nocompatible
 colorscheme monokai
 
+"indentline
+let g:indentLine_leadingSpaceEnabled = 1
+let g:indentLine_leadingSpaceChar = '·'
+let g:indentLine_char = '·'
+let g:indentLine_concealcursor = ''
+
 "shfmt
 let g:shfmt_extra_args = '-i 2'
 let g:shfmt_fmt_on_save = 1
+
 "youcompleteme
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -70,6 +72,7 @@ let g:airline_theme='base16_monokai'
 syntax on
 let python_highlight_all=1
 filetype plugin on
+filetype indent on
 set nofoldenable
 
 "history and backup
@@ -82,37 +85,6 @@ set directory=~/.vim/vimswaps/
 "use :retab to re indent files
 "set list shows you tabs
 set list
-"Python PEP8 compliant indent
-autocmd BufNewFile, BufRead *.py :call PythonDefaultIndent()
-func! PythonDefaultIndent()
-    set tabstop=4
-    set softtabstop=4
-    set shiftwidth=4
-    set textwidth=79
-    set expandtab
-    set autoindent
-    set fileformat=unix
-endfunc
-"Ruby indent
-autocmd BufNewFile, BufRead *.rb :call RubyDefaultIndent()
-func! RubyDefaultIndent()
-    set tabstop=2
-    set softtabstop=2
-    set shiftwidth=2
-    set expandtab
-    set autoindent
-    set fileformat=unix
-endfunc
-"YAML indent
-autocmd BufNewFile, BufRead *.yaml,*.yml :call YamlDefaultIndent()
-func! YamlDefaultIndent()
-    setlocal et
-    set tabstop=2
-    set softtabstop=2
-    set shiftwidth=2
-    set expandtab
-    set autoindent
-endfunc
 autocmd FileType yaml nnoremap <buffer> <F2> :call YamlPrettyPrint()<CR>
 func! YamlPrettyPrint()
     execute "normal! mz"
@@ -120,16 +92,6 @@ func! YamlPrettyPrint()
         execute "%!yamlfmt"
     endif
     execute "normal! 'z"
-endfunc
-"JASON indent
-autocmd BufNewFile, BufRead *.json :call JsonDefaultIndent()
-func! JsonDefaultIndent()
-    setlocal et
-    set tabstop=4
-    set softtabstop=4
-    set shiftwidth=4
-    set expandtab
-    set autoindent
 endfunc
 autocmd FileType json nnoremap <buffer> <F2> :call JsonPrettyPrint()<CR>
 func! JsonPrettyPrint()
@@ -145,27 +107,23 @@ func! JsonPrettyPrint()
     endif
     execute "normal! 'z"
 endfunc
-"Undefined file types indent
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set expandtab
-set autoindent
-
-"end tabs
 set formatoptions=t
 set encoding=utf-8
 set hlsearch
 set incsearch
 set visualbell
-set noerrorbells
+"set noerrorbells
 "editor
+set visualbell
+set ttyfast
 set number
 set ruler
 set colorcolumn=80
 set cursorline
-"set auto indent
-set smartindent
+set autoindent
+set expandtab
+"set smarttab
+"set smartindent
 set whichwrap=<,>,h,l
 set backspace=2
 set wildmenu
@@ -177,7 +135,7 @@ nnoremap <F3> :call FixLastSpellingError()<CR>
 func! FixLastSpellingError()
     normal! mm[s1z=`m
 endfunc
-setlocal spell spelllang=en_us
+"setlocal spell spelllang=en_us
 "Remove trailing white space when saving file
 autocmd BufWrite * :call DeleteTrailingWhiteSpace()
 func! DeleteTrailingWhiteSpace()
@@ -185,6 +143,8 @@ func! DeleteTrailingWhiteSpace()
     %s/\s\+$//ge
     execute "normal 'z"
 endfunc
+"JS workaraund
+:au FileType js,javascript setlocal shiftwidth=2 softtabstop=2
 "Templates
 autocmd BufNewFile *.sh 0r ~/.vim/templates/skeleton.sh
 autocmd BufNewFile *.py 0r ~/.vim/templates/skeleton.py
